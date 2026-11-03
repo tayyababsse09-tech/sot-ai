@@ -1,80 +1,104 @@
-import React from 'react';
-import { Container, Button, Carousel } from 'react-bootstrap';
-import { personalInfo } from '../Data/portfolio';
+import React, { useState } from "react";
+import Navbar from "./navbar";
+import About from "./about";
+import Services from "./services";
+import Skills from "./skills";
+import Project from "./project";
+import Cv from "./cv";
+import Contact from "./contact";
+import Footer from "./footer";
+import Testimonials from "./testimonials";
+import Faq from "./faq";
+import { personalInfo } from "../Data/portfolio";
 
 const App = () => {
-  return (
-    <section id="home" className="min-vh-100 p-0 bg-slate-950 position-relative d-flex align-items-center">
-      
-      {/* Floating Animated Background Glow Circles */}
-      <div className="position-absolute top-25 start-25 w-96 h-96 bg-teal-500/10 rounded-circle blur-3xl animate-glow pointer-events-none"></div>
-      <div className="position-absolute bottom-25 end-25 w-96 h-96 bg-pink-500/10 rounded-circle blur-3xl animate-glow pointer-events-none" style={{ animationDelay: '3s' }}></div>
+  const [activeTab, setActiveTab] = useState("home");
 
-      <Carousel controls={true} indicators={true} interval={5000} fade className="w-100">
-        
-        {/* Slide 1 */}
-        <Carousel.Item>
-          <div 
-            className="min-vh-100 d-flex align-items-center justify-content-center text-center" 
-            style={{ 
-              backgroundImage: `linear-gradient(180deg, rgba(3, 7, 18, 0.85) 0%, rgba(3, 7, 18, 0.95) 100%), url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1600&auto=format&fit=crop')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
-          >
-            <Container className="py-5 mt-5 animate-entrance">
-              <span className="d-inline-block bg-teal-500/20 text-teal-300 border border-teal-500/30 px-4 py-2 rounded-pill mb-3 fw-medium">
-                ⚡ Full Stack Web Developer
+  const renderContent = () => {
+    switch (activeTab) {
+      case "about":
+        return <About />;
+      case "services":
+        return <Services />;
+      case "skills":
+        return <Skills />;
+      case "project":
+        return <Project />;
+      case "cv":
+        return <Cv />;
+      case "contact":
+        return <Contact />;
+      case "home":
+      default:
+        return (
+          <div>
+            {/* Hero Section */}
+            <div className="max-w-5xl mx-auto px-6 py-16 text-center">
+              <span className="bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs px-4 py-1.5 rounded-full font-medium inline-block mb-4">
+                Welcome to my Portfolio ✨
               </span>
-              <h1 className="display-3 fw-bold text-white mb-3">
-                Hi, I'm <span className="gradient-text">{personalInfo.name}</span>
+              <h1 className="text-4xl sm:text-6xl font-extrabold mb-4 gradient-text">
+                Hi, I'm {personalInfo.name} 👋
               </h1>
-              <p className="lead text-slate-300 mb-4 fs-3 max-w-2xl mx-auto">
+              <p className="text-2xl text-teal-300 mb-6 font-medium">
                 {personalInfo.title}
               </p>
-              <div className="d-flex justify-content-center gap-3 mt-4">
-                <Button href="#projects" size="lg" className="btn-glow-teal-pink px-4 py-3 fw-semibold rounded-pill">
-                  View Live Projects 🚀
-                </Button>
-                <Button href="#contact" variant="outline-info" size="lg" className="px-4 py-3 rounded-pill text-teal-400 border-teal-400 hover:bg-teal-500/20">
-                  Contact Me
-                </Button>
-              </div>
-            </Container>
-          </div>
-        </Carousel.Item>
-
-        {/* Slide 2 */}
-        <Carousel.Item>
-          <div 
-            className="min-vh-100 d-flex align-items-center justify-content-center text-center" 
-            style={{ 
-              backgroundImage: `linear-gradient(180deg, rgba(3, 7, 18, 0.85) 0%, rgba(3, 7, 18, 0.95) 100%), url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1600&auto=format&fit=crop')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
-          >
-            <Container className="py-5 mt-5 animate-entrance">
-              <span className="d-inline-block bg-pink-500/20 text-pink-300 border border-pink-500/30 px-4 py-2 rounded-pill mb-3 fw-medium">
-                🌐 Frontend, Backend & Deployment
-              </span>
-              <h1 className="display-3 fw-bold text-white mb-3">
-                Building & <span className="gradient-text">Deploying Modern Web Apps</span>
-              </h1>
-              <p className="lead text-slate-300 mb-4 fs-3 max-w-2xl mx-auto">
-                Crafting robust applications using React, Bootstrap, Tailwind CSS & Database Architecture
+              <p className="text-slate-300 max-w-2xl mx-auto mb-8 text-lg leading-relaxed">
+                Fourth-semester Software Engineering student in Lahore, specializing in building high-performance web applications, interactive user interfaces, and commercial web portals like GetDustify.
               </p>
-              <div className="d-flex justify-content-center gap-3 mt-4">
-                <Button href="#skills" size="lg" className="btn-glow-teal-pink px-4 py-3 fw-semibold rounded-pill">
-                  Explore Tech Stack 💻
-                </Button>
+              <div className="flex justify-center gap-4 flex-wrap">
+                <button
+                  onClick={() => setActiveTab("project")}
+                  className="gradient-btn font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-pink-500/25 transition"
+                >
+                  Explore Projects 🚀
+                </button>
+                <button
+                  onClick={() => setActiveTab("cv")}
+                  className="border border-teal-500/50 hover:border-pink-500 text-teal-300 hover:text-pink-300 font-semibold px-6 py-3 rounded-xl transition"
+                >
+                  View / Download CV 📄
+                </button>
               </div>
-            </Container>
-          </div>
-        </Carousel.Item>
+            </div>
 
-      </Carousel>
-    </section>
+            {/* Quick Highlights Grid */}
+            <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+              <div className="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl shadow-xl">
+                <div className="text-3xl mb-3">💻</div>
+                <h3 className="text-xl font-bold text-teal-300 mb-2">Frontend Stack</h3>
+                <p className="text-slate-400 text-sm">Proficient in React.js, Tailwind CSS, Bootstrap 5, JavaScript, HTML5, and CSS3.</p>
+              </div>
+              <div className="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl shadow-xl">
+                <div className="text-3xl mb-3">🚀</div>
+                <h3 className="text-xl font-bold text-pink-300 mb-2">Live Deployments</h3>
+                <p className="text-slate-400 text-sm">Successfully deployed and managed commercial projects like getdustify.com and Netlify apps.</p>
+              </div>
+              <div className="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl shadow-xl">
+                <div className="text-3xl mb-3">🎓</div>
+                <h3 className="text-xl font-bold text-teal-300 mb-2">Academic Record</h3>
+                <p className="text-slate-400 text-sm">BS Software Engineering student with strong fundamentals in algorithms, UI engineering, and Git version control.</p>
+              </div>
+            </div>
+
+            {/* Testimonials Section */}
+            <Testimonials />
+
+            {/* FAQ Section */}
+            <Faq />
+          </div>
+        );
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col justify-between bg-slate-900 text-slate-100">
+      <div>
+        <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <main>{renderContent()}</main>
+      </div>
+      <Footer />
+    </div>
   );
 };
 
