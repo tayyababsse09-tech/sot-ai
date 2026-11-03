@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
+import { personalInfo } from "../Data/portfolio";
+
+const currentYear = new Date().getFullYear();
 
 const Footer = () => {
   return (
-    <footer className="py-4 bg-slate-950 border-t border-slate-800/80 text-center text-slate-400">
-      <p className="m-0">
-        © {new Date().getFullYear()} Full Stack Developer. Built with React, Vite, Bootstrap & Tailwind.
-      </p>
+    <footer className="border-t border-slate-800 bg-slate-950 py-6 text-center text-slate-400 text-sm mt-12">
+      <p>© {currentYear} {personalInfo.name}. Designed with Teal & Pink Aesthetics.</p>
     </footer>
   );
 };
