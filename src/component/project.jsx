@@ -1,150 +1,127 @@
-import React from 'react';
-import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
-import { motion } from 'framer-motion';
-
-const projects = [
-  {
-    id: 1,
-    title: "GetDustify",
-    description: "A professional service management platform engineered for fast performance and clean UI.",
-    liveDemo: "https://getdustify.com/",
-    techStack: ["HTML5", "CSS3", "JavaScript", "Bootstrap"]
-  },
-  {
-    id: 2,
-    title: "Squad5 Platform",
-    description: "A modern web application showcasing dynamic user experiences and modern design layout.",
-    liveDemo: "https://squad5.netlify.app/",
-    techStack: ["React.js", "Tailwind CSS", "Bootstrap"]
-  },
-  {
-    id: 3,
-    title: "Modern Web Application",
-    description: "An advanced web application built with clean UI, responsive layout, and interactive features.",
-    liveDemo: "https://elaborate-daifuku-d9f5c7.netlify.app/",
-    techStack: ["React.js", "Tailwind CSS", "Bootstrap"]
-  }
-];
+import React, { useState } from "react";
+import { projectsData } from "../Data/portfolio";
 
 const Project = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-      },
-    },
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextProject = () => {
+    setCurrentIndex((prev) => (prev + 1) % projectsData.length);
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  const prevProject = () => {
+    setCurrentIndex((prev) => (prev - 1 + projectsData.length) % projectsData.length);
   };
 
   return (
-    <section id="projects" className="py-5" style={{ backgroundColor: '#030712' }}>
-      <Container className="py-4">
-        <motion.div 
-          className="text-center mb-5"
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="display-5 fw-bold text-white mb-2">
-            Featured <span className="text-transparent bg-clip-text" style={{ background: 'linear-gradient(to right, #2dd4bf, #ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Projects</span>
-          </h2>
-          <p className="text-muted fs-5">Explore my live site previews and applications.</p>
-        </motion.div>
-        
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-        >
-          <Row className="g-4 justify-content-center">
-            {projects.map((project) => (
-              <Col key={project.id} lg={6} md={12} className="mb-4">
-                <motion.div 
-                  variants={cardVariants}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                  className="h-100"
-                >
-                  <Card 
-                    className="border border-secondary shadow-lg h-100 rounded-4 p-4 text-white"
-                    style={{ backgroundColor: '#0f172a' }}
-                  >
-                    <Card.Body className="d-flex flex-column p-0">
-                      
-                      {/* Browser Window Mockup with Live Website Screenshot API */}
-                      <div className="mb-4 rounded-3 overflow-hidden border border-secondary bg-slate-950 shadow-md">
-                        {/* Browser Top Bar */}
-                        <div className="bg-slate-900 px-3 py-2 d-flex align-items-center gap-2 border-bottom border-secondary">
-                          <span className="rounded-circle bg-danger d-inline-block" style={{ width: '10px', height: '10px' }}></span>
-                          <span className="rounded-circle bg-warning d-inline-block" style={{ width: '10px', height: '10px' }}></span>
-                          <span className="rounded-circle bg-success d-inline-block" style={{ width: '10px', height: '10px' }}></span>
-                          <span className="text-muted small ms-2 text-truncate" style={{ fontSize: '0.75rem' }}>{project.liveDemo}</span>
-                        </div>
-                        
-                        {/* Automated Live Screenshot Preview */}
-                        <div style={{ height: '190px', overflow: 'hidden', position: 'relative' }}>
-                          <motion.img 
-                            src={`https://api.microlink.io/?url=${encodeURIComponent(project.liveDemo)}&screenshot=true&meta=false&embed=screenshot.url`}
-                            alt={project.title}
-                            className="w-100 h-100 object-fit-cover"
-                            whileHover={{ scale: 1.08 }}
-                            transition={{ duration: 0.4 }}
-                            loading="lazy"
-                          />
-                        </div>
-                      </div>
+    <section className="max-w-5xl mx-auto px-6 py-12">
+      <h2 className="text-3xl font-bold mb-8 text-center gradient-text">
+        Featured Projects & Live Demo
+      </h2>
 
-                      <div className="d-flex justify-content-between align-items-center mb-3">
-                        <h3 className="h4 fw-bold m-0 text-white">{project.title}</h3>
-                        <Badge bg="danger" className="px-3 py-2 rounded-pill" style={{ fontSize: '0.75rem' }}>
-                          🔥 Web App
-                        </Badge>
-                      </div>
-                      
-                      <Card.Text className="text-light mb-4 flex-grow-1 fs-6 leading-relaxed opacity-75">
-                        {project.description}
-                      </Card.Text>
-                      
-                      {/* Tech Stack Tags */}
-                      <div className="mb-4 d-flex flex-wrap gap-2">
-                        {project.techStack.map((tech, idx) => (
-                          <span 
-                            key={idx} 
-                            className="badge bg-dark text-info border border-info px-3 py-2 rounded-pill fw-semibold"
-                            style={{ fontSize: '0.85rem' }}
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                      
-                      <Button
-                        href={project.liveDemo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border-0 w-100 fw-semibold rounded-pill py-3 text-white fs-6 shadow-md text-decoration-none"
-                        style={{ background: 'linear-gradient(to right, #14b8a6, #ec4899)' }}
-                      >
-                        Open Live Site Fullscreen ↗
-                      </Button>
-                    </Card.Body>
-                  </Card>
-                </motion.div>
-              </Col>
-            ))}
-          </Row>
-        </motion.div>
-      </Container>
+      {/* Live Preview Window / Demo Frame for GetDustify */}
+      <div className="mb-12 bg-slate-800/90 border border-teal-500/40 rounded-2xl p-6 shadow-2xl">
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <span className="bg-teal-500/20 text-teal-300 text-xs px-3 py-1 rounded-full border border-teal-500/30">
+              Live Website Preview 🌐
+            </span>
+            <h3 className="text-xl font-bold text-slate-100 mt-2">GetDustify Commercial Portal</h3>
+          </div>
+          <a
+            href="https://www.getdustify.com"
+            target="_blank"
+            rel="noreferrer"
+            className="gradient-btn text-xs sm:text-sm px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition"
+          >
+            Open in New Tab ↗
+          </a>
+        </div>
+
+        {/* Embedded Live Web View */}
+        <div className="w-full h-[450px] bg-slate-900 rounded-xl overflow-hidden border border-slate-700 shadow-inner relative">
+          <iframe
+            src="https://www.getdustify.com"
+            title="GetDustify Live Demo"
+            className="w-full h-full border-0"
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+
+      {/* Interactive Project Slider */}
+      <div className="bg-slate-800/90 border border-teal-500/30 rounded-2xl p-8 relative shadow-2xl mb-12">
+        <div className="flex justify-between items-center mb-4">
+          <span className="bg-pink-500/20 text-pink-300 text-xs px-3 py-1 rounded-full border border-pink-500/30">
+            Featured 0{projectsData[currentIndex].id}
+          </span>
+          <div className="flex gap-2">
+            <button 
+              onClick={prevProject}
+              className="bg-slate-900 hover:bg-teal-600 text-white w-9 h-9 rounded-full flex items-center justify-center transition"
+            >
+              ❮
+            </button>
+            <button 
+              onClick={nextProject}
+              className="bg-slate-900 hover:bg-pink-600 text-white w-9 h-9 rounded-full flex items-center justify-center transition"
+            >
+              ❯
+            </button>
+          </div>
+        </div>
+
+        <h3 className="text-2xl font-bold text-teal-300 mb-3">{projectsData[currentIndex].title}</h3>
+        <p className="text-slate-300 mb-6">{projectsData[currentIndex].description}</p>
+
+        <div className="flex flex-wrap gap-2 mb-6">
+          {projectsData[currentIndex].techStack.map((tech, i) => (
+            <span key={i} className="bg-slate-900 text-teal-400 border border-teal-500/30 text-xs px-3 py-1 rounded-md">
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex gap-4">
+          <a
+            href={projectsData[currentIndex].liveLink}
+            target="_blank"
+            rel="noreferrer"
+            className="gradient-btn px-5 py-2.5 rounded-lg text-sm font-semibold transition"
+          >
+            Live Demo 🔗
+          </a>
+          <a
+            href={projectsData[currentIndex].githubLink}
+            target="_blank"
+            rel="noreferrer"
+            className="border border-slate-600 hover:border-pink-400 text-slate-300 hover:text-pink-300 px-5 py-2.5 rounded-lg text-sm font-semibold transition"
+          >
+            GitHub Code
+          </a>
+        </div>
+      </div>
+
+      {/* Grid View */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {projectsData.map((project) => (
+          <div key={project.id} className="bg-slate-800/60 border border-slate-700 p-5 rounded-xl flex flex-col justify-between">
+            <div>
+              <h4 className="text-lg font-bold text-teal-300 mb-2">{project.title}</h4>
+              <p className="text-slate-400 text-sm mb-4 line-clamp-3">{project.description}</p>
+            </div>
+            <a
+              href={project.liveLink}
+              target="_blank"
+              rel="noreferrer"
+              className="text-pink-400 hover:text-pink-300 text-sm font-medium flex items-center gap-1"
+            >
+              Visit Project ↗
+            </a>
+          </div>
+        ))}
+      </div>
     </section>
   );
 };
 
-export default Project;cl
+export default Project;
