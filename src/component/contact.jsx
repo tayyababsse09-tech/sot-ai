@@ -1,137 +1,95 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Button, Card, Form, Alert } from 'react-bootstrap';
-import { personalInfo } from '../Data/portfolio';
+import React, { useState } from "react";
+import { personalInfo } from "../Data/portfolio";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleWhatsAppSubmit = (e) => {
     e.preventDefault();
-    if (formData.name && formData.email && formData.message) {
-      setSubmitted(true);
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setSubmitted(false);
-        setFormData({ name: '', email: '', message: '' });
-      }, 4000);
-    }
+    const whatsappUrl = `https://wa.me/${personalInfo.whatsapp.replace("+923294509525", "")}?text=${encodeURIComponent(
+      `Hello Tayyaba,\n\nName: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`
+    )}`;
+    window.open(whatsappUrl, "_blank");
   };
 
   return (
-    <section id="contact" className="py-5 bg-slate-900/50">
-      <Container className="py-5">
-        <div className="text-center mb-5 animate-entrance">
-          <h2 className="fw-bold text-white mb-3 display-5">
-            Get In <span className="gradient-text">Touch</span>
-          </h2>
-          <p className="text-slate-400 max-w-xl mx-auto fs-5">
-            Feel free to call directly or send an email message for full-stack web development projects.
-          </p>
+    <section className="max-w-3xl mx-auto px-6 py-12">
+      <h2 className="text-3xl font-bold mb-8 text-center gradient-text">
+        Get In Touch
+      </h2>
+      <div className="bg-slate-800/80 border border-teal-500/30 rounded-2xl p-8 shadow-xl">
+        <p className="text-slate-300 mb-6 text-center">
+          Have a project in mind or want to hire me? Fill out the form below to send a message directly to my WhatsApp!
+        </p>
+
+        <form onSubmit={handleWhatsAppSubmit} className="space-y-4 mb-8">
+          <div>
+            <label className="block text-sm text-slate-300 mb-1">Your Name</label>
+            <input
+              type="text"
+              name="name"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+              className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:border-teal-400 outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-slate-300 mb-1">Your Email</label>
+            <input
+              type="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+              className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:border-teal-400 outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-slate-300 mb-1">Your Message</label>
+            <textarea
+              name="message"
+              required
+              rows="4"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="Type your message here..."
+              className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:border-teal-400 outline-none resize-none"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            className="w-full gradient-btn font-semibold py-3 rounded-xl shadow-lg transition"
+          >
+            💬 Send Message via WhatsApp
+          </button>
+        </form>
+
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <a
+            href={personalInfo.github}
+            target="_blank"
+            rel="noreferrer"
+            className="bg-slate-900 border border-teal-500/40 hover:border-pink-500 text-teal-300 hover:text-pink-300 px-6 py-3 rounded-xl font-semibold transition text-center"
+          >
+            GitHub Profile
+          </a>
+          <a
+            href="https://www.getdustify.com"
+            target="_blank"
+            rel="noreferrer"
+            className="bg-slate-900 border border-pink-500/40 hover:border-teal-500 text-pink-300 hover:text-teal-300 px-6 py-3 rounded-xl font-semibold transition text-center"
+          >
+            GetDustify Live Project
+          </a>
         </div>
-
-        <Row className="justify-content-center g-4">
-          
-          {/* Quick Contact Info Card */}
-          <Col md={5}>
-            <Card className="glass-card p-4 rounded-4 h-100 text-center">
-              <Card.Body className="d-flex flex-column justify-content-center">
-                
-                {/* Direct Email Link */}
-                <div className="mb-4">
-                  <span className="text-teal-400 d-block fs-5 mb-1 fw-semibold">📧 Email Address</span>
-                  <a href={`mailto:${personalInfo.email}`} className="text-white text-decoration-none fs-5 fw-bold hover:text-pink-400 transition">
-                    {personalInfo.email}
-                  </a>
-                </div>
-
-                {/* Direct Phone Call Link */}
-                <div className="mb-4">
-                  <span className="text-pink-400 d-block fs-5 mb-1 fw-semibold">📞 Direct Phone / Call</span>
-                  <a href="tel:+923000000000" className="btn btn-outline-info text-teal-300 border-teal-500/40 rounded-pill px-4 py-2 mt-2 fw-semibold">
-                    📲 Tap to Call: +92 3294509525
-                  </a>
-                </div>
-
-                <div className="d-flex justify-content-center gap-4 pt-3">
-                  <a href={personalInfo.linkedin} target="_blank" rel="noreferrer" className="text-teal-400 text-decoration-none hover:text-pink-400 fs-5 fw-semibold transition">
-                    LinkedIn ↗
-                  </a>
-                  <a href={personalInfo.github} target="_blank" rel="noreferrer" className="text-teal-400 text-decoration-none hover:text-pink-400 fs-5 fw-semibold transition">
-                    GitHub ↗
-                  </a>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          {/* Email Submit Form */}
-          <Col md={7}>
-            <Card className="glass-card p-4 rounded-4">
-              <Card.Body>
-                <h4 className="text-white mb-4 fw-bold">Send a Direct Message</h4>
-
-                {submitted && (
-                  <Alert variant="success" className="bg-teal-500/20 text-teal-200 border-teal-500/40 rounded-3 mb-4">
-                    🎉 Thank you! Your message has been sent successfully.
-                  </Alert>
-                )}
-
-                <Form onSubmit={handleSubmit}>
-                  <Form.Group className="mb-3">
-                    <Form.Label className="text-slate-300">Your Name</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      name="name" 
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Enter your name" 
-                      required 
-                      className="bg-slate-950/80 border-slate-700 text-white rounded-3 py-2"
-                    />
-                  </Form.Group>
-
-                  <Form.Group className="mb-3">
-                    <Form.Label className="text-slate-300">Your Email</Form.Label>
-                    <Form.Control 
-                      type="email" 
-                      name="email" 
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="Enter your email" 
-                      required 
-                      className="bg-slate-950/80 border-slate-700 text-white rounded-3 py-2"
-                    />
-                  </Form.Group>
-
-                  <Form.Group className="mb-4">
-                    <Form.Label className="text-slate-300">Message</Form.Label>
-                    <Form.Control 
-                      as="textarea" 
-                      rows={4} 
-                      name="message" 
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Write your project details..." 
-                      required 
-                      className="bg-slate-950/80 border-slate-700 text-white rounded-3"
-                    />
-                  </Form.Group>
-
-                  <Button type="submit" className="btn-glow-teal-pink w-100 py-3 fw-semibold rounded-pill fs-6">
-                    Submit Email Message 🚀
-                  </Button>
-                </Form>
-              </Card.Body>
-            </Card>
-          </Col>
-
-        </Row>
-      </Container>
+      </div>
     </section>
   );
 };
